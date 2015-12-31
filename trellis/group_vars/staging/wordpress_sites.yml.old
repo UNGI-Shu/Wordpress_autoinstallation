@@ -1,0 +1,35 @@
+# Documentation: https://roots.io/trellis/docs/remote-server-setup/
+wordpress_sites:
+  example.com:
+    site_hosts:
+      - staging.example.com
+    local_path: ../site # path targeting local Bedrock site directory (relative to Ansible root)
+    repo: git@git.ungi.com:wordpress_autoinstallation.git
+    branch: master
+    # subtree_path: site # relative path to your Bedrock/WP directory in your repo (above) if it is not the root (like the roots-example-project structure)
+    multisite:
+      enabled: false
+      subdomains: false
+    ssl:
+      enabled: false
+    cache:
+      enabled: false
+      duration: 30s
+    env:
+      disable_wp_cron: true
+      wp_home: http://staging.example.com
+      wp_siteurl: http://staging.example.com/wp
+      wp_env: staging
+      db_name: example_staging
+      db_user: example_dbuser
+      db_password: example_dbpassword
+      # Generate your keys here: https://api.wordpress.org/secret-key/1.1/salt/
+      # These CANNOT contain the characters "{%" in succession
+      auth_key: "xl9+?f5EX-`|[r6tc`-kgHdNczktoYQ:<VVJVWqWyiz(.3WukJo&|;ogJ, NzdkH"
+      secure_auth_key: "U9KEa5~@M<kxQOcLjx}+_XS+nS27OW+alm^;.N7q(|6,-Y%2*GpBZn?e$[i8*:hb"
+      logged_in_key: "V;w#wuFih:x`GQ@]Gw5U-5!67e@C7rg:024*2,)2ufy+B[oTXYbyZuq d-i5*5|l"
+      nonce_key: "yb.FHok,MRnKa+?VXUfgKY-4`Th^c}OSuVq`.%~scO&LnZQ^ 3Pj@rz3?~F2J5IC"
+      auth_salt: "9D k./ihI OA~|QQ|j{WM_G +,;VsRu5A+t]IDe0-%attX]DNp X2K?*Oyo,EqY7"
+      secure_auth_salt: "tk/YO{I&w)5~1Tn--Q,2?kGF#>LpE*<0)1/|U]CM x&`k0jJ<C#ne_R), S v&[-"
+      logged_in_salt: "SgIPyxp[&p#Z;#5gIi53-t+*.Y^G0VB~8&s(y0&v3W+mQr0t^o8>WXJ6g<`J}7UJ"
+      nonce_salt: "brY2E9/r+yO*+>+^8#+?dGjjoR3I!RYF*)F$}I)U+{EGr>EUE,y-%~Z5nz^t}E%5"

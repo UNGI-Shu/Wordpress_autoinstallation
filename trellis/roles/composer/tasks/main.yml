@@ -1,0 +1,32 @@
+---
+#- name: Add Composer PPA
+#  apt_repository: repo="ppa:duggan/composer" update_cache=yes
+
+#- name: Install Composer
+#  apt: name=php5-composer state=present force=yes
+
+#- name: Install Composer
+#  command: curl -sS https://getcomposer.org/installer | php
+
+#- name: Configurer Composer
+#  command: mv composer.phar /usr/local/bin/composer
+
+#########################################################################
+# Composer n'est pas installé via Ansible, il est installé manuellement #
+#########################################################################
+
+- name: Composer self update
+  command: composer self-update
+  register: composer_update_result
+  changed_when: composer_update_result | success and 'already using composer version' not in composer_update_result.stderr
+
+- name: add Composer vendor binary path
+  lineinfile:
+    dest: /etc/environment
+    regexp: ^PATH="(((?!:./vendor/bin).)*)"
+    line: PATH="\1:./vendor/bin"
+    backrefs: yes
+
+- name: Composer config github-oauth
+  command: composer config -g github-oauth.github.com {{ composer_github_oauth_token }}
+  when: composer_github_oauth_token is defined
